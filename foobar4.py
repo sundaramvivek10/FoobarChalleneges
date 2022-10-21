@@ -69,18 +69,30 @@ def inverse(a):
         ret.append(tmp[i][len(tmp[i])//2:])
     return ret
 
+def getQandR(list):
+    QandR = sortstates(lst)[numofabsorbingstates(list):len(list)]
+    Q, R =[], []
+    for i in range(len(list) - numofabsorbingstates(list)):
+        R.append(QandR[i][0:numofabsorbingstates(lst)])
+        Q.append(QandR[i][numofabsorbingstates(lst):len(lst)])
+
+    for i in (range(len(Q))):
+        Q[i][i] =  1 - Q[i][i]
+    return Q, R
+
+def convertlisttoprobabilities(list):
+    for i in range(len(list)):
+        if sum(list[i]) != 0:
+            for j in range(len(list[i])):
+                list[i][j] = list[i][j]/sum(list[i])
+    return list
 
 lst = [[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
+nicelist = convertlisttoprobabilities(lst)
 
-QandR = sortstates(lst)[numofabsorbingstates(lst):len(lst)]
-Q, R =[], []
-for i in range(len(lst) - numofabsorbingstates(lst)):
-    R.append(QandR[i][0:numofabsorbingstates(lst)])
-    Q.append(QandR[i][numofabsorbingstates(lst):len(lst)])
-
-for i in (range(len(Q))):
-    Q[i][i] =  1 - Q[i][i]
+Q, R = getQandR(lst)
 
 print(inverse(Q))
+print(nicelist)
 
 
