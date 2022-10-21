@@ -1,3 +1,7 @@
+"""
+Standarad BFS query to find number of steps needed by a knight to go from
+one square to another
+"""
 class squarenode:
     def __init__(self,row,col,steps):
         self.row = row

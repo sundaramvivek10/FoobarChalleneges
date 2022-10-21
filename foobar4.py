@@ -1,3 +1,7 @@
+"""
+Absorbing Markov Chain
+"""
+
 def numofabsorbingstates(list):
     count = 0
     for arr in list:

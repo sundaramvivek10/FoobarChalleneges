@@ -1,3 +1,7 @@
+"""
+Arrange primes in a string upto a certain number
+"""
+
 import math
 
 def checkprime(n):
@@ -32,11 +36,4 @@ def fillprimestring(size):
     return AllPrimeStrings
 
 def solution(i):
-    # Your code here
-    #ID = ''
     ID = fillprimestring(10005)[i:i+5]
-    # for j in range(i,1+5,1):
-    #     ID += str(allprimestring[j])
-    return ID
-
-print(solution(3))
