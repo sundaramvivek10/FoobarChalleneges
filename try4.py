@@ -1,10 +1,5 @@
-"""
-Absorbing Markov Chain
-"""
-
 from fractions import Fraction
 import math
-
 def I_matrix(n):
     matrix = [[0]*n for i in range(n)]
     for i in range(n):
@@ -31,14 +26,14 @@ def substact(matr_a, matr_b):
         for valA, valB in zip(matr_a[idx], matr_b[idx]):
             tmp.append(valA - valB)
         output.append(tmp[:])
-    return output[:]
+    return output
 
 def getProbs(list):
     for i in range(len(list)):
         listsum = sum(list[i])
         if sum(list[i]) != 0:
             for j in range(len(list[i])):
-                list[i][j] = list[i][j]/listsum
+                list[i][j] = float(list[i][j]/listsum)
     return list
 
 def NofAbsStates(list):
@@ -80,9 +75,11 @@ def nonAbsStates(list):
 def sortstates(list):
     sortedstates = []
     absstates = AbsStates(list)
-    for states in absstates: sortedstates.append(states)
+    for states in absstates: 
+        sortedstates.append(states)
     nonabsstates = nonAbsStates(list)
-    for states in nonabsstates: sortedstates.append(states)   
+    for states in nonabsstates: 
+        sortedstates.append(states)   
     return sortedstates
 
 def transposeMatrix(m):
@@ -155,23 +152,24 @@ def getFR(list):
     FR = multiply(F,R)
     return FR
 
-lst = [[0, 2, 1, 0, 0], [0, 0, 0, 3, 4], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]]
-nicelist = getProbs(lst)
+def solution(m):
+    # Your code here
+    nicelist = getProbs(m)
+    FR = getFR(nicelist)
+    FR_ = []
+    denoms = []
+    for element in FR[0]:
+        FR_.append((Fraction(element)).limit_denominator())
+    for p in FR_:
+        denoms.append(p.denominator)
+    lcm = 1
+    for i in denoms:
+        lcm = int(lcm*i/float(math.gcd(lcm,i)))
+    finallist = []
+    for i in FR_:
+        p = i * lcm
+        finallist.append(p.numerator)
+    finallist.append(lcm)
+    return finallist
 
-FR = getFR(nicelist)
-FR_ = []
-denoms = []
-for element in FR[0]:
-    FR_.append((Fraction(element)).limit_denominator())
-for p in FR_:
-    denoms.append(p.denominator)
-lcm = 1
-for i in denoms:
-    lcm = lcm*i//math.gcd(lcm,i)
-finallist = []
-for i in FR_:
-    p = i * lcm
-    finallist.append(p.numerator)
-finallist.append(lcm)
-
-print (finallist)
+print(solution([[0, 1, 0, 0, 0, 1], [4, 0, 0, 3, 2, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0, 0]]))
